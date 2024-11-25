@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AppController } from './app.controller';
 import { OauthModule } from './oauth/oauth.module';
-import { ProjectModule } from './project/project.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -24,10 +24,9 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService],
     }),
     UserModule,
-    ProjectModule,
     OauthModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

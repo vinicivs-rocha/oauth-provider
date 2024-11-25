@@ -20,7 +20,7 @@ import {
 import { RegisterUserRequest } from '../requests/register-user.request';
 import { UserCredentialsRequest } from '../requests/user-credentials.request';
 
-@Controller('user')
+@Controller('api/user')
 export class UserController {
   constructor(
     private registerUser: RegisterUser,
