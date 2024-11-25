@@ -21,6 +21,7 @@ export class AuthenticationInterceptor implements NestInterceptor {
         response.header('x-auth', result.token);
 
         return {
+          token: result.token,
           name: result.user.name,
         };
       }),
