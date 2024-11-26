@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProjectModule } from 'src/project/project.module';
 import { UserController } from './api/controllers/user.controller';
 import { EncryptionGateway } from './application/gateways/encryption.gateway';
 import { JWTGateway } from './application/gateways/jwt.gateway';
@@ -27,6 +28,7 @@ import { User, UserSchema } from './infra/schemas/user.schema';
       }),
       inject: [ConfigService],
     }),
+    forwardRef(() => ProjectModule),
   ],
   providers: [
     {
@@ -59,5 +61,6 @@ import { User, UserSchema } from './infra/schemas/user.schema';
     },
   ],
   controllers: [UserController],
+  exports: [AuthenticateToken, UserRepository],
 })
 export class UserModule {}

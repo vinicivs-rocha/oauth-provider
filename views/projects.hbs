@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projetos</title>
+  <script src="https://cdn.tailwindcss.com?"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"
+    integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="flex flex-row gap-20 flex-wrap p-12">
+    {{#if projects.length}}
+    {{#each projects}}
+    <div class="w-72 flex flex-col p-4 bg-slate-300 gap-12">
+      <h2 class="text-2xl text-center">{{name}}</h2>
+      <div class="flex flex-col gap-4">
+        <h3 class="text-xl">Urls de redirecionamento</h3>
+        <ul class="flex flex-col gap-2">
+          {{#each redirectUrls}}
+          <li><a href="{{this}}" target="_blank">{{this}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-xl text-center">Escopo: <strong>{{scope}}</strong></h3>
+      </div>
+      <button class="p-2 rounded-md border-2 border-slate-400 text-center hover:bg-slate-200"
+        hx-delete="/project/{{id}}?authenticationToken={{../authenticationToken}}" hx-swap="innerHtml" hx-target="body">
+        Remover
+      </button>
+    </div>
+    {{/each}}
+    {{/if}}
+    <div class="w-72 flex flex-col p-4 bg-slate-300 gap-12">
+      <h2 class="text-2xl text-center">Adicionar projeto</h2>
+      <form action="/project?authenticationToken={{authenticationToken}}" method="post" hx-boost="true">
+        <div class="flex flex-col gap-2">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" class="p-1 rounded-md border border-slate-400" />
+          <label for="redirectUrl">URL de redirecionamento</label>
+          <input type="url" id="redirectUrl" name="redirectUrl" class="p-1 rounded-md border border-slate-400" />
+          <label for="scope">Escopo</label>
+          <select name="scope" id="scope" class="p-1 rounded-md border border-slate-400">
+            {{#each scopes}}
+            <option value="{{value}}">{{label}}</option>
+            {{/each}}
+          </select>
+          <button type="submit" class="p-2 bg-slate-500 text-white rounded-md">Adicionar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

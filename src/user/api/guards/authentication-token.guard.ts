@@ -7,7 +7,7 @@ export class AuthenticationTokenGuard implements CanActivate {
   constructor(private authenticateToken: AuthenticateToken) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: Request = context.switchToHttp().getRequest();
-    const token = request.header('x-auth');
+    const token = request.query['authenticationToken'] as string | undefined;
 
     const result = await this.authenticateToken.execute({
       token,
