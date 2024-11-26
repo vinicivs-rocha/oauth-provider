@@ -10,7 +10,7 @@ export class User {
     readonly phone: string,
     readonly password: string,
     readonly createdAt: Date,
-    readonly tokens: Token[],
+    private _tokens: Token[],
   ) {}
 
   static create(data: User.CreationData) {
@@ -33,8 +33,18 @@ export class User {
     });
   }
 
+  get tokens() {
+    return this._tokens;
+  }
+
   addToken(token: Token) {
-    this.tokens.push(token);
+    this._tokens.push(token);
+  }
+
+  removeToken(token: Token) {
+    this._tokens = this._tokens.filter(
+      (t) => t.token !== token.token && t.access !== token.access,
+    );
   }
 }
 

@@ -6,6 +6,7 @@ import { ProjectRepository } from './application/repositories/project.repository
 import { AddProject } from './application/usecases/add-project.usecase';
 import { ListProjects } from './application/usecases/list-projects.usecase';
 import { RemoveProject } from './application/usecases/remove-project.usecase';
+import { VerifyProject } from './application/usecases/verify-project.usecase';
 import { ProjectMongooseRepository } from './infra/repositories/project.mongoose.repository';
 import { Project, ProjectSchema } from './infra/schemas/project.schema';
 
@@ -20,7 +21,8 @@ import { Project, ProjectSchema } from './infra/schemas/project.schema';
     AddProject,
     RemoveProject,
     { provide: ProjectRepository, useClass: ProjectMongooseRepository },
+    VerifyProject,
   ],
-  exports: [ListProjects],
+  exports: [ListProjects, VerifyProject, ProjectRepository],
 })
 export class ProjectModule {}

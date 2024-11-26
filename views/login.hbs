@@ -16,7 +16,7 @@
     <div class="w-1/2 h-3/4 flex flex-col justify-center items-center gap-8 container bg-slate-100 p-6 rounded-lg">
       <h1 class="text-2xl text-center">Informe suas crendenciais</h1>
       <div class="w-1/2">
-        <form action="/user/login" method="post" hx-boost="true" hx-redi>
+        <form action="/user/login{{projectAuthorizationParameters}}" method="post" hx-boost="true" hx-redi>
           <div class="flex flex-col space-y-4">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" class="p-2 border border-slate-300 rounded-md" />
@@ -25,7 +25,7 @@
             <button type="submit" class="p-2 bg-slate-400 hover:bg-slate-500 text-white rounded-md">
               Entrar
             </button>
-            <a href="register" class="p-2 rounded-md border-2 border-slate-400 text-center hover:bg-slate-200">
+            <a href="user/register{{projectAuthorizationParameters}}" class="p-2 rounded-md border-2 border-slate-400 text-center hover:bg-slate-200">
               Registrar-se
             </a>
           </div>

@@ -8,6 +8,9 @@ export abstract class UserRepository {
   abstract findByCredentials(
     params: UserRepository.FindByCredentialsParams,
   ): Promise<User | undefined>;
+  abstract findOne(
+    params: UserRepository.FindOneParams,
+  ): Promise<User | undefined>;
 }
 
 export namespace UserRepository {
@@ -18,5 +21,9 @@ export namespace UserRepository {
   }
   export interface FindByCredentialsParams {
     email: string;
+  }
+
+  export interface FindOneParams {
+    id?: string;
   }
 }

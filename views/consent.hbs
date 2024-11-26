@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consentir com o projeto</title>
+  <script src="https://cdn.tailwindcss.com?"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"
+    integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="flex h-screen justify-center items-center">
+    <div class="w-1/2 h-3/4 flex flex-col justify-center items-center gap-8 container bg-slate-100 p-6 rounded-lg">
+      <h1 class="text-2xl text-center">Consinta com o projeto {{project.name}}</h1>
+      <div class="w-1/2">
+        <form
+          action="/user/authorize-project{{projectAuthorizationParameters}}&authenticationToken={{authenticationToken}}"
+          method="post" hx-boost="true">
+          <div class="flex flex-col space-y-4">
+            <h2 class="text-2xl">Escopo: <strong>{{project.scope}}</strong></h3>
+              <p class="text-xl">Caso consinta, o projeto {{project.name}} poderá acessar as seguintes informações:</p>
+              <ul class="list-decimal">
+                {{#each scopeAccess}}
+                <li class="text-lg">{{this}}</li>
+                {{/each}}
+              </ul>
+              <button type="submit" class="p-2 bg-slate-400 hover:bg-slate-500 text-white rounded-md">
+                Consentir
+              </button>
+              <a href="{{projectAuthorizationParameters.redirectUrl}}?error=access_denied"
+                class="p-2 rounded-md border-2 border-slate-400 text-center hover:bg-slate-200">
+                Negar
+              </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

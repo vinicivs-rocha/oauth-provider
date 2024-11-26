@@ -11,11 +11,45 @@ export class UserMongooseRepository implements UserRepository {
     @InjectModel(UserSchema.name) private userModel: Model<UserSchema>,
   ) {}
 
+  async findOne(
+    params: UserRepository.FindOneParams,
+  ): Promise<User | undefined> {
+    let userData: UserSchema | undefined;
+    if (params.id) {
+      userData = await this.userModel.findOne({ id: params.id });
+    }
+
+    return (
+      userData &&
+      User.create({
+        id: userData.id,
+        email: userData.email,
+        name: userData.name,
+        password: userData.password,
+        phone: userData.phone,
+        createdAt: userData.createdAt,
+        tokens: userData.tokens,
+      })
+    );
+  }
+
   save(user: User): Promise<void> {
-    return this.userModel.findOneAndUpdate({ id: user.id }, user, {
-      upsert: true,
-      new: true,
-    });
+    return this.userModel.findOneAndUpdate(
+      { id: user.id },
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        password: user.password,
+        phone: user.phone,
+        createdAt: user.createdAt,
+        tokens: user.tokens,
+      },
+      {
+        upsert: true,
+        new: true,
+      },
+    );
   }
 
   async findByCredentials(

@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { UUID } from 'crypto';
 import { HydratedDocument } from 'mongoose';
 import { Token } from 'src/user/domain/entities/user';
 
 @Schema()
 export class User {
   @Prop()
-  id: string;
+  id: UUID;
 
   @Prop({ required: true, trim: true })
   name: string;

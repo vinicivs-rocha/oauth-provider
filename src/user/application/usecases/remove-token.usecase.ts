@@ -26,8 +26,6 @@ export class RemoveToken {
       throw new Error('User not found');
     }
 
-    console.log(user);
-
     user.update({
       tokens: user.tokens.filter((t) => t.token !== input.token),
     });

@@ -14,7 +14,7 @@ export namespace AuthenticateToken {
 }
 
 @Injectable()
-export class AuthenticateToken {
+export class ValidateAuthenticationToken {
   constructor(
     private userRepository: UserRepository,
     private jwtGateway: JWTGateway,

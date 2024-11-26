@@ -7,10 +7,12 @@ import { UserController } from './api/controllers/user.controller';
 import { EncryptionGateway } from './application/gateways/encryption.gateway';
 import { JWTGateway } from './application/gateways/jwt.gateway';
 import { UserRepository } from './application/repositories/user.repository';
-import { AuthenticateToken } from './application/usecases/authenticate-token.usecase';
 import { AuthenticateUserCredentials } from './application/usecases/authenticate-user-credentials.usecase';
+import { GenerateOAuthToken } from './application/usecases/generate-oauth-token.usecase';
 import { RegisterUser } from './application/usecases/register-user.usecase';
 import { RemoveToken } from './application/usecases/remove-token.usecase';
+import { ValidateAuthenticationToken } from './application/usecases/valdiate-authentication-token.usecase';
+import { ValidateAuthorizationCode } from './application/usecases/validate-authorization-code.usecase';
 import { EncryptionArgonGateway } from './infra/gateways/encryption.argon.gateway';
 import { JWTNestGateway } from './infra/gateways/jwt.nest.gateway';
 import { UserMongooseRepository } from './infra/repositories/user.mongoose.repository';
@@ -44,8 +46,8 @@ import { User, UserSchema } from './infra/schemas/user.schema';
       useClass: EncryptionArgonGateway,
     },
     {
-      provide: AuthenticateToken,
-      useClass: AuthenticateToken,
+      provide: ValidateAuthenticationToken,
+      useClass: ValidateAuthenticationToken,
     },
     {
       provide: AuthenticateUserCredentials,
@@ -59,8 +61,15 @@ import { User, UserSchema } from './infra/schemas/user.schema';
       provide: RemoveToken,
       useClass: RemoveToken,
     },
+    ValidateAuthorizationCode,
+    GenerateOAuthToken,
   ],
   controllers: [UserController],
-  exports: [AuthenticateToken, UserRepository],
+  exports: [
+    ValidateAuthenticationToken,
+    UserRepository,
+    ValidateAuthorizationCode,
+    JWTGateway,
+  ],
 })
 export class UserModule {}
