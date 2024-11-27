@@ -8,10 +8,12 @@ import { EncryptionGateway } from './application/gateways/encryption.gateway';
 import { JWTGateway } from './application/gateways/jwt.gateway';
 import { UserRepository } from './application/repositories/user.repository';
 import { AuthenticateUserCredentials } from './application/usecases/authenticate-user-credentials.usecase';
+import { DetailCurrentUser } from './application/usecases/detail-current-user.usecase';
 import { GenerateOAuthToken } from './application/usecases/generate-oauth-token.usecase';
 import { RegisterUser } from './application/usecases/register-user.usecase';
 import { RemoveToken } from './application/usecases/remove-token.usecase';
 import { ValidateAuthenticationToken } from './application/usecases/valdiate-authentication-token.usecase';
+import { ValidateAccessToken } from './application/usecases/validate-access-token.usecase';
 import { ValidateAuthorizationCode } from './application/usecases/validate-authorization-code.usecase';
 import { EncryptionArgonGateway } from './infra/gateways/encryption.argon.gateway';
 import { JWTNestGateway } from './infra/gateways/jwt.nest.gateway';
@@ -63,6 +65,8 @@ import { User, UserSchema } from './infra/schemas/user.schema';
     },
     ValidateAuthorizationCode,
     GenerateOAuthToken,
+    ValidateAccessToken,
+    DetailCurrentUser,
   ],
   controllers: [UserController],
   exports: [

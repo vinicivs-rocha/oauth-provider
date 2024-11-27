@@ -14,12 +14,14 @@ import { Project as ReqProject } from 'src/project/api/decorators/project.decora
 import { ProjectVerificationGuard } from 'src/project/api/guards/project-verification.guard';
 import { Project } from 'src/project/domain/entities/project';
 import { AuthenticateUserCredentials } from 'src/user/application/usecases/authenticate-user-credentials.usecase';
+import { DetailCurrentUser } from 'src/user/application/usecases/detail-current-user.usecase';
 import { GenerateOAuthToken } from 'src/user/application/usecases/generate-oauth-token.usecase';
 import { RegisterUser } from 'src/user/application/usecases/register-user.usecase';
 import { RemoveToken } from 'src/user/application/usecases/remove-token.usecase';
 import { User } from 'src/user/domain/entities/user';
 import { Token } from '../decorators/token.decorator';
 import { User as ReqUser } from '../decorators/user.decorator';
+import { AccessTokenGuard } from '../guards/access-token.guard';
 import { AuthenticationTokenGuard } from '../guards/authentication-token.guard';
 import { ProjectAuthorizationRequest } from '../requests/project-authorization.request';
 import { RegisterUserRequest } from '../requests/register-user.request';
@@ -32,6 +34,7 @@ export class UserController {
     private authenticateUserCredentials: AuthenticateUserCredentials,
     private removeToken: RemoveToken,
     private generateOAuthToken: GenerateOAuthToken,
+    private detailCurrentUser: DetailCurrentUser,
   ) {}
 
   @Get('register')
@@ -129,5 +132,14 @@ export class UserController {
     res.redirect(
       `${projectAuthorizationParameters.redirectUrl}?code=${result.authorizationCode}`,
     );
+  }
+
+  @Get('me')
+  @UseGuards(AccessTokenGuard)
+  me(@ReqUser() user: User, @Token() token: string) {
+    return this.detailCurrentUser.execute({
+      user,
+      accessToken: token,
+    });
   }
 }

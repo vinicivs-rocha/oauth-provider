@@ -3,6 +3,13 @@ import { randomUUID, UUID } from 'crypto';
 export type Token = { access: string; token: string };
 
 export class User {
+  private scopeData = {
+    full: ['id', 'name', 'email', 'phone'],
+    default: ['id', 'name'],
+    email: ['id', 'name', 'email'],
+    phone: ['id', 'name', 'phone'],
+  };
+
   constructor(
     readonly id: UUID,
     readonly name: string,
@@ -45,6 +52,15 @@ export class User {
     this._tokens = this._tokens.filter(
       (t) => t.token !== token.token && t.access !== token.access,
     );
+  }
+
+  getScopeData(scope: string): Partial<User> {
+    const userData = this.scopeData[scope];
+
+    return userData.reduce((acc, key) => {
+      acc[key] = this[key];
+      return acc;
+    }, {});
   }
 }
 
