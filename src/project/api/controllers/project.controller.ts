@@ -85,7 +85,9 @@ export class ProjectController {
   ) {
     return {
       authenticationToken,
-      projectAuthorizationParameters: `?projectId=${projectAuthorizationParameters.projectId}&scope=${projectAuthorizationParameters.scope}&redirectUrl=${projectAuthorizationParameters.redirectUrl}`,
+      projectId: projectAuthorizationParameters.projectId,
+      projectScope: projectAuthorizationParameters.scope,
+      projectRedirectUrl: projectAuthorizationParameters.redirectUrl,
       project,
       scopeAccess: this.scopeAccess[project.scope],
     };

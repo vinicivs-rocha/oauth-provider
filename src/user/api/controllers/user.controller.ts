@@ -116,7 +116,7 @@ export class UserController {
     };
   }
 
-  @Post('authorize-project')
+  @Get('authorize-project')
   @UseGuards(AuthenticationTokenGuard, ProjectVerificationGuard)
   async authorizeProject(
     @ReqUser() user: User,
